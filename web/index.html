@@ -1,3 +1,86 @@
-<p>
-    
-</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chat Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .chat-container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            margin: 20px auto;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .message {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+        }
+
+        .user {
+            background-color: #3498db;
+            color: #fff;
+            align-self: flex-end;
+        }
+
+        .bot {
+            background-color: #e0e0e0;
+            color: #333;
+            align-self: flex-start;
+        }
+
+        .message-input-container {
+            display: flex;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .message-input {
+            flex-grow: 1;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .send-button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="message user">
+            <p>Hello! How can I help you?</p>
+        </div>
+        <div class="message bot">
+            <p>Hello! This is the bot's response.</p>
+        </div>
+        <!-- You can add more messages here -->
+
+        <div class="message-input-container">
+            <input type="text" class="message-input" placeholder="Type your message...">
+            <button class="send-button">Send</button>
+        </div>
+    </div>
+</body>
+</html>

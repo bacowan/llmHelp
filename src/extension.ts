@@ -15,13 +15,13 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 			);
 
-			const editor = vscode.window.activeTextEditor;
+			/*const editor = vscode.window.activeTextEditor;
 			if (editor) {
 				const code = editor.document.getText();
 				vscode.window.showInformationMessage('Code retrieved from the active editor:\n' + code);
 			} else {
 				vscode.window.showInformationMessage('No active text editor found.');
-			}
+			}*/
 
 			const onDiskPath = vscode.Uri.joinPath(context.extensionUri, 'web', 'index.html');
 			const pathUri = panel.webview.asWebviewUri(onDiskPath);
