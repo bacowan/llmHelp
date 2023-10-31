@@ -11,9 +11,16 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.ViewColumn.Beside, // Editor column to show the new webview panel in.
 				{
 					// Only allow the webview to access resources in our extension's media directory
-					localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'web')]
+					localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'web')],
+					enableScripts: true
 				}
 			);
+			
+
+			function loadExternalFile(oldFileName: string, html: string): string {
+				const onDiskPath = vscode.Uri.joinPath(context.extensionUri, 'web', oldFileName);
+				return html.replace(oldFileName, panel.webview.asWebviewUri(onDiskPath).toString());
+			}
 
 			/*const editor = vscode.window.activeTextEditor;
 			if (editor) {
@@ -25,7 +32,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 			const onDiskPath = vscode.Uri.joinPath(context.extensionUri, 'web', 'index.html');
 			const pathUri = panel.webview.asWebviewUri(onDiskPath);
-			panel.webview.html = fs.readFileSync(pathUri.fsPath,'utf8');
+			let html = fs.readFileSync(pathUri.fsPath,'utf8');
+			html = loadExternalFile("index.js", html);
+			html = loadExternalFile("styles.css", html);
+			panel.webview.html = html;
 		})
 	);
 }
