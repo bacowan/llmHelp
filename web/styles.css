@@ -17,6 +17,12 @@ body {
     border-radius: 5px;
 }
 
+.chat-message-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
 .message {
     padding: 10px;
     margin: 10px;

@@ -6,22 +6,21 @@
     <meta http-equiv="Content-Security-Policy" content="default-src self; img-src vscode-webview-resource:; script-src vscode-webview-resource: 'self' 'unsafe-inline'; style-src vscode-webview-resource: 'self' 'unsafe-inline'; ">
     <title>Simple Chat Interface</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <script src="index.js"></script>
 </head>
 <body>
     <div class="chat-container">
-        <div class="message user">
-            <p>Hello! How can I help you?</p>
-        </div>
-        <div class="message bot">
-            <p>Hello! This is the bot's response.</p>
+        <div id="chat-container" class="chat-message-container">
+            <div class="message bot">
+                <p>Hello! I can assist you with your homework assignment! What do you need help with?</p>
+            </div>
         </div>
         <!-- You can add more messages here -->
 
         <div class="message-input-container">
-            <input type="text" class="message-input" placeholder="Type your message...">
-            <button class="send-button">Send</button>
+            <input id="message-box" type="text" class="message-input" placeholder="Type your message...">
+            <button id="send-button" class="send-button">Send</button>
         </div>
     </div>
+    <script src="index.js"></script>
 </body>
 </html>

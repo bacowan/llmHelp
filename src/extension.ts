@@ -16,7 +16,6 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 			);
 			
-
 			function loadExternalFile(oldFileName: string, html: string): string {
 				const onDiskPath = vscode.Uri.joinPath(context.extensionUri, 'web', oldFileName);
 				return html.replace(oldFileName, panel.webview.asWebviewUri(onDiskPath).toString());
