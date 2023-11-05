@@ -1,0 +1,12 @@
+{
+    "problems": [
+        {
+            "Title": "Dictionary Sum",
+            "Description": "Given a dictionary in Python, write a Python program to find the sum of all items in the dictionary.\n\nExamples:\n\nInput : {‘a’: 100, ‘b’:200, ‘c’:300}\nOutput : 600\n\nInput : {‘x’: 25, ‘y’:18, ‘z’:45}\nOutput : 88"
+        },
+        {
+            "Title": "List Reverse",
+            "Description": "Given a list, write a Python program to swap first and last element of the list.\n\nExamples:\n\nInput : [12, 35, 9, 56, 24]\nOutput : [24, 35, 9, 56, 12]\n\nInput : [1, 2, 3]\nOutput : [3, 2, 1]"
+        }
+    ]
+}
