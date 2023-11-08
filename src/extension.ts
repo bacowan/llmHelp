@@ -1,5 +1,8 @@
 import * as vscode from 'vscode';
+import Framework from './framework';
+
 const fs = require('fs').promises;
+const framework : Framework = new Framework();
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -16,16 +19,15 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 			);
 
-			/*const editor = vscode.window.activeTextEditor;
-			if (editor) {
-				const code = editor.document.getText();
-				vscode.window.showInformationMessage('Code retrieved from the active editor:\n' + code);
-			} else {
-				vscode.window.showInformationMessage('No active text editor found.');
-			}*/
+			const editor = vscode.window.activeTextEditor;
 
+			if (editor !== null && editor !== undefined) {
+				initializeHandlers(context, panel, editor);
+			}
+			else {
+				//TODO: Error handling
+			}
 			await loadHtml(context, panel);
-			await initializeBot(context, panel);
 		})
 	);
 }
@@ -56,5 +58,33 @@ async function initializeBot(context: vscode.ExtensionContext, panel: vscode.Web
 	}
 }
 
+function initializeHandlers(context: vscode.ExtensionContext, panel: vscode.WebviewPanel, editor: vscode.TextEditor) {
+	panel.webview.onDidReceiveMessage(
+		async message => {
+			switch (message.command) {
+			case 'loaded':
+				await initializeBot(context, panel);
+				return;
+			case 'initialize':
+				const code = editor.document.getText();
+				await framework.initialize(message.data, code);
+				const initializeResponse = await framework.sendPrompt(message.data);
+				panel.webview.postMessage({ command: "return", data: initializeResponse });
+				return;
+			case 'prompt':
+				const response = await framework.sendPrompt(message.data);
+				panel.webview.postMessage({ command: "return", data: response });
+				return;
+			}
+		},
+		undefined,
+		context.subscriptions
+	);
+}
+
 // This method is called when your extension is deactivated
 export function deactivate() {}
+
+
+
+

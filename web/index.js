@@ -1,3 +1,5 @@
+const vscode = acquireVsCodeApi();
+
 var currentProblem = null;
 var config = null;
 
@@ -8,7 +10,7 @@ async function sendClicked() {
     messageBox.value = "";
 
     if (currentProblem === null) {
-        setNewProblem(userText);
+        await setNewProblem(userText);
     }
     else {
         await sendNewPrompt(userText);
@@ -45,22 +47,38 @@ function addMessage(text, role) {
 }
 
 async function sendNewPrompt(text) {
-    chatContainer = document.getElementById("chat-container");
     loadingDiv = createLoadingDots();
-    chatContainer.appendChild(loadingDiv);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-
-    await new Promise(r => setTimeout(r, 2000));
-    const response = "hi!";
-
+    const response = await postAsyncMessage("prompt", text);
     loadingDiv.remove();
     addMessage(response, "bot");
 }
 
-function setNewProblem(value) {
+async function postAsyncMessage(command, message) {
+    return await new Promise((resolve, reject) => {
+        const eventListener = event => {
+            const message = event.data;
+            if (message.command === 'return') {
+                window.removeEventListener('message', eventListener);
+                resolve(message.data);
+            }
+            // TODO: Timeout and reject?
+        };
+    
+        window.addEventListener('message', eventListener);
+    
+        vscode.postMessage({ command: command, data: message });
+    });
+}
+
+async function setNewProblem(value) {
     asNumber = Number(value);
     if (Number.isInteger(asNumber) && asNumber - 1 < config.problems.length) {
         currentProblem = config.problems[asNumber - 1];
+
+        loadingDiv = createLoadingDots();
+        await postAsyncMessage("initialize", currentProblem);
+        loadingDiv.remove();
+
         addMessage("Hello! I can assist you with your homework assignment! What do you need help with?", "bot");
     }
     else {
@@ -69,11 +87,14 @@ function setNewProblem(value) {
 }
 
 function createLoadingDots() {
+    chatContainer = document.getElementById("chat-container");
     const container = document.createElement("div");
     container.classList.add("loading-indicator");
     container.appendChild(createDot(1));
     container.appendChild(createDot(2));
     container.appendChild(createDot(3));
+    chatContainer.appendChild(container);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
     return container;
 }
 
@@ -93,7 +114,7 @@ function onConfigLoaded(newConfig) {
 }
 
 window.addEventListener('message', event => {
-    const message = event.data; // The JSON data our extension sent
+    const message = event.data;
 
     switch (message.command) {
         case 'loadConfig':
@@ -109,3 +130,5 @@ document.getElementById("message-box").addEventListener("keyup", function(event)
         sendClicked();
     }
 });
+
+vscode.postMessage({ command: "loaded" });
