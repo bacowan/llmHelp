@@ -1,28 +1,33 @@
 import OpenAI from "openai";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import winston from 'winston';
 
 const openai = new OpenAI();
 
 export default class Framework {
-    #logger : any;
+    #logger : winston.Logger | null = null;
     #conversationHistory : ChatCompletionMessageParam[] = [];
     #isInitialized = false;
     #chatGptModel = "";
-    #problem = "";
+    #problem: { Description: string, Title: string } = { Description: "", Title: "" };
     #code = "";
+    #responseConsensusSteps: number = 3;
 
     get isInitialized() { return this.#isInitialized; }
 
-    setLogger(logger : any) {
+    setLogger(logger : winston.Logger) {
         this.#logger = logger;
     }
 
-    initialize(chatGptModel: string, problem: string, code: string) {
+    initialize(problem: { Description: string, Title: string }, code: string, chatGptModel: string, responseConsensusSteps: number = 3) {
         this.#chatGptModel = chatGptModel;
         this.#isInitialized = true;
         this.#problem = problem;
         this.#code = code;
         this.#conversationHistory = [];
+        this.#responseConsensusSteps = responseConsensusSteps;
+        this.#logger?.info("chatGptModel set to " + chatGptModel, { tags: "initializing" });
+        this.#logger?.info("Problem set to " + problem.Title, { tags: "initializing" });
     }
 
     async sendPrompt(prompt: string) {
@@ -36,7 +41,7 @@ export default class Framework {
 
     async #sendInitialPrompt(question: string) : Promise<string> {
         const prompt = "I have been given the following instructions:\n"
-            + this.#problem + "\n\n"
+            + this.#problem.Description + "\n\n"
             + "I have written the following code:\n"
             + this.#code + "\n\n"
             + question + "\n"
@@ -45,11 +50,11 @@ export default class Framework {
             + "the code this way in order for me to come to the conclusion myself. "
             + "After that, ask me another question, and so on.";
         
-        return await this.#chat(prompt);
+        return await this.#chat(prompt, true, false);
     }
 
     async #sendNewPrompt(prompt: string) : Promise<string> {
-        const isValid = await this.#validatePrompt(prompt);
+        const isValid = true;//await this.#validatePrompt(prompt);
         if (isValid) {
             const fullPrompt = prompt + "\n"
                 + "Please keep helping me, and remember to act as a teacher: don't give me any explicit answers or code.";
@@ -68,23 +73,64 @@ export default class Framework {
         return !response.toLowerCase().includes("irrelevant");
     }
 
-    async #chat(prompt: string, includeInHistory: boolean = true): Promise<string> {
-        this.#conversationHistory.push({role: "user", content: prompt});
+    async #createChatCompletion(values: OpenAI.Chat.Completions.ChatCompletionMessageParam[]): Promise<string> {
         const response = await openai.chat.completions.create({
-            messages: this.#conversationHistory,
+            messages: values,
             model: this.#chatGptModel
         });
-        const responseText = response['choices'][0]['message']['content'] ?? "";
+        return response['choices'][0]['message']['content'] ?? "";
+    }
 
-        this.#logger.info("Prompt: " + prompt);
-        this.#logger.info("Response: " + responseText);
+    async #responseConsensusStep(prompt: string): Promise<string> {
+        const tempConversationHistory = [...this.#conversationHistory];
+        tempConversationHistory.push({role: "user", content: prompt});
+        return await this.#createChatCompletion(tempConversationHistory);
+    }
 
-        if (includeInHistory) {
-            this.#conversationHistory.push({role: "assistant", content: responseText});
+    async #responseConsensus(prompt: string) {
+        const responses = [];
+        for (let i = 0; i < this.#responseConsensusSteps; i++) {
+            const response = await this.#responseConsensusStep(prompt);
+            responses.push(response);
+            this.#logger?.info(`${i + 1}: ${response}`, { tags: "consensus-response" });
+        }
+        let consensusPrompt = "I have been given the following responses to a prompt that I submitted. I want to select a prompt that best matches the other prompts. Please give me the number of that prompt, and respond with only the number.";
+        for (let i = 0; i < this.#responseConsensusSteps; i++) {
+            consensusPrompt += `\n${i + 1}. ${responses[i]}`;
+        }
+        const consensusResponse = await this.#createChatCompletion([{role: "user", content: consensusPrompt}]);
+        this.#logger?.info(consensusResponse, { tags: "consensus-resolution-response" });
+        const match = consensusResponse.match(/\d+/);
+        let consensusIndex = 0;
+        if (match) {
+            consensusIndex = parseInt(match[0], 10) - 1;
+        }
+        if (consensusIndex < responses.length) {
+            return responses[consensusIndex];
         }
         else {
-            this.#conversationHistory.pop();
+            return responses[0];
         }
-        return responseText;
+    }
+
+    async #chat(prompt: string, includeInHistory: boolean = true, useConsensus: boolean = true): Promise<string> {
+        let response: string;
+        if (useConsensus) {
+            response = await this.#responseConsensus(prompt);
+        }
+        else {
+            const tempConversationHistory = [...this.#conversationHistory];
+            tempConversationHistory.push({role: "user", content: prompt});
+            response = await this.#createChatCompletion(tempConversationHistory);
+        }
+        if (includeInHistory) {
+            this.#conversationHistory.push({role: "user", content: prompt});
+            this.#conversationHistory.push({role: "assistant", content: response});
+        }
+
+        this.#logger?.info(prompt, { tags: "prompt" });
+        this.#logger?.info(response, { tags: "response" });
+
+        return response;
     }
 }
