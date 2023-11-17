@@ -1,3 +1,5 @@
+# Sample usage: python log_parser.py logfile.log --level info --tag prompt,response
+
 import json
 import argparse
 
