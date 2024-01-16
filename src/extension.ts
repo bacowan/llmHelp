@@ -102,15 +102,15 @@ function initializeHandlers(context: vscode.ExtensionContext, panel: vscode.Webv
 					await initializeBot(context, panel);
 					return;
 				case 'initialize':
-					const code = editor.document.getText();
 					const problem = message.data as { Description: string, Title: string };
-					framework.initialize(problem, code, chatGptModel);
+					framework.initialize(problem, chatGptModel);
 					panel.webview.postMessage({ command: "return" });
 					return;
 				case 'prompt':
 					let response : string;
 					try {
-						response = await framework.sendPrompt(message.data);
+						const code = editor.document.getText();
+						response = await framework.sendPrompt(message.data, code);
 					}
 					catch (e) {
 						if (typeof e === "string") {

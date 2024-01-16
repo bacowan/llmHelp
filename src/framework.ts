@@ -19,27 +19,37 @@ export default class Framework {
         this.#logger = logger;
     }
 
-    initialize(problem: { Description: string, Title: string }, code: string, chatGptModel: string, responseConsensusSteps: number = 3) {
+    #stripExclude(code: string): string {
+        const index = code.indexOf("#exclude");
+        if (index === -1) {
+            return code;
+        }
+        else {
+            return code.substring(0, index);
+        }
+    }
+
+    initialize(problem: { Description: string, Title: string }, chatGptModel: string, responseConsensusSteps: number = 3) {
         this.#chatGptModel = chatGptModel;
         this.#isInitialized = true;
         this.#problem = problem;
-        this.#code = code;
         this.#conversationHistory = [];
         this.#responseConsensusSteps = responseConsensusSteps;
         this.#logger?.info("chatGptModel set to " + chatGptModel, { tags: "initializing" });
         this.#logger?.info("Problem set to " + problem.Title, { tags: "initializing" });
     }
 
-    async sendPrompt(prompt: string) {
+    async sendPrompt(prompt: string, code: string) {
         if (this.#conversationHistory.length === 0) {
-            return await this.#sendInitialPrompt(prompt);
+            return await this.#sendInitialPrompt(prompt, code);
         }
         else {
-            return await this.#sendNewPrompt(prompt);
+            return await this.#sendNewPrompt(prompt, code);
         }
     }
 
-    async #sendInitialPrompt(question: string) : Promise<string> {
+    async #sendInitialPrompt(question: string, code: string) : Promise<string> {
+        this.#code = this.#stripExclude(code);
         const system_prompt = "I have been given the following instructions:\n"
             + this.#problem.Description + "\n\n"
             + "I have written the following code:\n"
@@ -74,24 +84,15 @@ export default class Framework {
         return await this.#chat(question, true, false);
     }
 
-    async #sendNewPrompt(prompt: string) : Promise<string> {
-        const isValid = true;//await this.#validatePrompt(prompt);
-        if (isValid) {
-            const fullPrompt = prompt + "\n"
-                + "Please keep helping me, and remember to act as a teacher: don't give me any explicit answers or code.";
-            return this.#chat(fullPrompt);
+    async #sendNewPrompt(prompt: string, code: string) : Promise<string> {
+        const newCode = this.#stripExclude(code);
+        let fullPrompt = prompt + "\n"
+            + "Please keep helping me, and remember to act as a teacher: don't give me any explicit answers or code.";
+        if (code !== newCode) {
+            this.#code = newCode;
+            fullPrompt += "\n\nNote that I have changed my code to the following:\n\n" + newCode;
         }
-        else {
-            return this.#chat("Can you please rephrase?");
-        }
-    }
-
-    async #validatePrompt(prompt: string) : Promise<boolean> {
-        const response = await this.#chat("Please categorize the following as it relates to what you just posted: "
-                                + "\"" + prompt + "\""
-                                + ". Is it: relevant, irrelevant, or relevant but incorrect? Please give a one word response.",
-                                false);
-        return !response.toLowerCase().includes("irrelevant");
+        return this.#chat(fullPrompt);
     }
 
     async #createChatCompletion(values: OpenAI.Chat.Completions.ChatCompletionMessageParam[]): Promise<string> {

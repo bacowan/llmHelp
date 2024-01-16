@@ -1,11 +1,15 @@
 {
     "problems": [
         {
-            "Title": "Dictionary Sum",
-            "Description": "Given a dictionary in Python, write a Python program to find the sum of all items in the dictionary.\n\nExamples:\n\nInput : {‘a’: 100, ‘b’:200, ‘c’:300}\nOutput : 600\n\nInput : {‘x’: 25, ‘y’:18, ‘z’:45}\nOutput : 88"
+            "Title": "Easy",
+            "Description": "Write a function in python which takes as input an integer n and returns the nth fibonacci number, where the 0th fibbonacci number is 0, and the 1st is 1.\n\nExamples:\n\nInput : 1\nOutput : 1\n\nInput : 10\nOutput : 55"
         },
         {
-            "Title": "List Reverse",
+            "Title": "Medium",
+            "Description": "Given a list, write a Python program to swap first and last element of the list.\n\nExamples:\n\nInput : [12, 35, 9, 56, 24]\nOutput : [24, 35, 9, 56, 12]\n\nInput : [1, 2, 3]\nOutput : [3, 2, 1]"
+        },
+        {
+            "Title": "Difficult",
             "Description": "Given a list, write a Python program to swap first and last element of the list.\n\nExamples:\n\nInput : [12, 35, 9, 56, 24]\nOutput : [24, 35, 9, 56, 12]\n\nInput : [1, 2, 3]\nOutput : [3, 2, 1]"
         }
     ]
