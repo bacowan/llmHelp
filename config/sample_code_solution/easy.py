@@ -1,7 +1,7 @@
 def maxInList(l):
-    maxVal = 0
-    for x in range(l):
-        if maxVal < x:
+    maxVal = None
+    for x in l:
+        if maxVal == None or maxVal < x:
             maxVal = x
     return maxVal
 

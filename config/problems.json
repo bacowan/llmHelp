@@ -2,7 +2,7 @@
     "problems": [
         {
             "Title": "Easy",
-            "Description": "Write a function in python which takes as input an integer n and returns the nth fibonacci number, where the 0th fibbonacci number is 0, and the 1st is 1.\n\nExamples:\n\nInput : 1\nOutput : 1\n\nInput : 10\nOutput : 55"
+            "Description": "Write a function in python which takes as input a list of integers and returns the largest one, without using the buitin max() function.\n\nExamples:\n\nInput : [1, 2, 3, 4, 5]\nOutput : 5\n\nInput : [-1, 19, 6, 19, 6, 6]\nOutput : 19"
         },
         {
             "Title": "Medium",

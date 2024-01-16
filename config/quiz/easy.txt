@@ -1,0 +1,6 @@
+1. Complete the following code which prints the numbers from 1 to 4
+    for ___ in range(___):
+        print(___)
+2. There is a variable `x` which you want to represent a number, but initially has no value. How can you initialize the variable?
+3. The following code will give an error. Why?
+    x = "1" < 2
