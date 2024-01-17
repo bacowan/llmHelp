@@ -6,7 +6,7 @@ var path = require('path');
 const fs = require('fs').promises;
 const framework : Framework = new Framework();
 
-const problemsPath = 'config/problems.json';
+const problemsPath = 'problems/problems.json';
 const configPath = 'config/config.json';
 const chatGptModel = 'gpt-3.5-turbo';
 let logger : winston.Logger;

@@ -1,0 +1,3 @@
+1. Explain how race conditions can happen
+2. What synchronization mechanism can be used to resolve race conditions?
+3. Explain what a deadlock is

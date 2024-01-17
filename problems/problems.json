@@ -6,7 +6,7 @@
         },
         {
             "Title": "Medium",
-            "Description": "Given a list, write a Python program to swap first and last element of the list.\n\nExamples:\n\nInput : [12, 35, 9, 56, 24]\nOutput : [24, 35, 9, 56, 12]\n\nInput : [1, 2, 3]\nOutput : [3, 2, 1]"
+            "Description": "Implement a python implementation of insertion sort; it should take as input a list, modify the list in place, and return the sorted list.\n\nExamples:\n\nInput : [12, 11, 13, 5, 6]\nOutput : [5, 6, 11, 12, 13]\n\nInput : [5, -1, 0, -3]\nOutput : [-3, -1, 0, 5]"
         },
         {
             "Title": "Difficult",
