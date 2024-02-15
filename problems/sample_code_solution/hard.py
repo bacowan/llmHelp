@@ -4,17 +4,21 @@ import time
 class BankAccount:
     def __init__(self, balance):
         self.balance = balance
+    
+    def get_balance(self):
+        ret = self.balance
+        # simulate network delay
+        time.sleep(1)
+        return ret
+    
+    def set_balance(self, val):
+        self.balance = val
 
 lock = threading.Lock()
 def transfer_funds(account_from, account_to, amount):
     with lock:
-        current_balance_from = account_from.balance
-        time.sleep(1)
-        account_from.balance = current_balance_from - amount
-
-        current_balance_to = account_to.balance
-        time.sleep(1)
-        account_to.balance = current_balance_to + amount
+        account_from.balance = account_from.get_balance() - amount
+        account_to.balance = account_to.balance.get_balance() + amount
 
 # exclude
 account1 = BankAccount(1000)
