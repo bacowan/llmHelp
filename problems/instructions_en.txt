@@ -1,0 +1,6 @@
+- You are to complete these 3 problems one at a time. You will be given 5 minutes for the first one, 10 minutes for the second, and 15 minutes for the third. If you finish early then let me know and then you can move on to the next question; otherwise I will let you know when the time is up and then you can move on.
+- I have already written a partial solution for each of the problems, but there are issues with them.
+- When solving the problems, I want you to consult with the chat window, which is connected to ChatGPT: it is aware of the code you write as well as the questions you are given. Don't try to complete the question on your own; ask it for help when trying to understand the code and solving the problem.
+- Do not open any other files or applications.
+- Note that any code that is written below the #exclude comment will not be sent to ChatGPT. Feel free to edit the code that is there, but it is there for the sake of testing your code.
+- Once you are finished, you will be given a quiz and a questionnaire

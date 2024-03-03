@@ -1,0 +1,6 @@
+1. I am familiar with python (strongly agree; somewhat agree; neither agree nor disagree; somewhat disagree; strongly disagree)
+2. I used the plugin a significant amount (strongly agree; somewhat agree; neither agree nor disagree; somewhat disagree; strongly disagree)
+3. The plugin helped me solve the assignments (strongly agree; somewhat agree; neither agree nor disagree; somewhat disagree; strongly disagree)
+4. The plugin did a good job at helping me learn (strongly agree; somewhat agree; neither agree nor disagree; somewhat disagree; strongly disagree)
+5. I felt that the plugin was useful (strongly agree; somewhat agree; neither agree nor disagree; somewhat disagree; strongly disagree)
+6. If you have any more comments, please write them here.
