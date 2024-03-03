@@ -8,7 +8,7 @@ const framework : Framework = new Framework();
 
 const problemsPath = 'problems/problems.json';
 const configPath = 'config/config.json';
-const chatGptModel = 'gpt-3.5-turbo';
+const chatGptModel = 'gpt-4-0125-preview';
 let logger : winston.Logger;
 
 export function activate(context: vscode.ExtensionContext) {

@@ -12,6 +12,8 @@ export default class Framework {
     #problem: { Description: string, Title: string } = { Description: "", Title: "" };
     #code = "";
     #responseConsensusSteps: number = 3;
+    #inputTokens = 0;
+    #outputTokens = 0;
 
     get isInitialized() { return this.#isInitialized; }
 
@@ -20,12 +22,13 @@ export default class Framework {
     }
 
     #stripExclude(code: string): string {
-        const index = code.indexOf("#exclude");
+        const index = code.indexOf("# exclude");
         if (index === -1) {
             return code;
         }
         else {
-            return code.substring(0, index);
+            const test = code.substring(0, index);
+            return test;
         }
     }
 
@@ -88,7 +91,7 @@ export default class Framework {
         const newCode = this.#stripExclude(code);
         let fullPrompt = prompt + "\n"
             + "Please keep helping me, and remember to act as a teacher: don't give me any explicit answers or code.";
-        if (code !== newCode) {
+        if (this.#code !== newCode) {
             this.#code = newCode;
             fullPrompt += "\n\nNote that I have changed my code to the following:\n\n" + newCode;
         }
@@ -100,6 +103,10 @@ export default class Framework {
             messages: values,
             model: this.#chatGptModel
         });
+        if (response.usage !== undefined && response.usage !== null) {
+            this.#inputTokens += response.usage.prompt_tokens;
+            this.#outputTokens += response.usage.completion_tokens;
+        }
         return response['choices'][0]['message']['content'] ?? "";
     }
 
@@ -152,6 +159,7 @@ export default class Framework {
 
         this.#logger?.info(prompt, { tags: "prompt" });
         this.#logger?.info(response, { tags: "response" });
+        this.#logger?.info(`total_input_tokens: ${this.#inputTokens}; total_output_tokens: ${this.#outputTokens}`, { tags: "tokens" });
 
         return response;
     }
