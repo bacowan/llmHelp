@@ -9,9 +9,10 @@ export default class Framework {
     #conversationHistory : ChatCompletionMessageParam[] = [];
     #isInitialized = false;
     #chatGptModel = "";
-    #problem: { Description: string, Title: string, RecommendedResponseRole: string | null } = { Description: "", Title: "", RecommendedResponseRole: null };
+    #problem: { Description: string, Title: string } = { Description: "", Title: "" };
     #code = "";
     #responseConsensusSteps: number = 3;
+    #recommendedResponseRole: string | null = null;
     #inputTokens = 0;
     #outputTokens = 0;
     #lang : { [key: string]: { [lang: string]: string } } = {};
@@ -35,7 +36,7 @@ export default class Framework {
         }
     }
 
-    initialize(problem: { Description: string, Title: string, RecommendedResponseRole: string | null }, chatGptModel: string, userLanguage: "En" | "Jp", lang : { [key: string]: { [lang: string]: string } }, useFramework: boolean, responseConsensusSteps: number = 3) {
+    initialize(problem: { Description: string, Title: string }, chatGptModel: string, userLanguage: "En" | "Jp", lang : { [key: string]: { [lang: string]: string } }, recommendedResponseRole: string | null, useFramework: boolean, responseConsensusSteps: number = 3) {
         this.#chatGptModel = chatGptModel;
         this.#isInitialized = true;
         this.#problem = problem;
@@ -43,6 +44,7 @@ export default class Framework {
         this.#userLanguage = userLanguage;
         this.#lang = lang;
         this.#useFramework = useFramework;
+        this.#recommendedResponseRole = recommendedResponseRole;
         this.#responseConsensusSteps = responseConsensusSteps;
         this.#logger?.info("chatGptModel set to " + chatGptModel, { tags: "initializing" });
         this.#logger?.info("Problem set to " + problem.Title, { tags: "initializing" });
@@ -57,7 +59,7 @@ export default class Framework {
         }
     }
 
-    async #sendInitialPrompt(question: string, code: string) : Promise<Array<string>> {
+    async #sendInitialPrompt(question: string, code: string) : Promise<string> {
         this.#code = this.#stripExclude(code);
         let system_prompt = this.#lang["IHaveBeenGivenTheFollowingInstructions"][this.#userLanguage] + "\n"
             + this.#problem.Description + "\n\n"
@@ -71,9 +73,9 @@ export default class Framework {
         return await this.#chat(question, true, false);
     }
 
-    async #sendNewPrompt(prompt: string, code: string) : Promise<Array<string>> {
-        if (this.#problem.RecommendedResponseRole !== null && prompt === "x") {
-            return [await this.#recommendResponse()];
+    async #sendNewPrompt(prompt: string, code: string) : Promise<string> {
+        if (this.#recommendedResponseRole !== null && prompt === "x") {
+            return await this.#recommendResponse();
         }
         else {
             const newCode = this.#stripExclude(code);
@@ -134,12 +136,12 @@ export default class Framework {
     }
 
     async #recommendResponse(): Promise<string> {
-        if (this.#problem.RecommendedResponseRole !== null) {
+        if (this.#recommendedResponseRole !== null) {
             const values = this.#conversationHistory.filter(m => m.role !== "system");
             values.push({
                 role: "user",
                 content: "Give me a sample response, but pretend you're a student who's "
-                    + this.#problem.RecommendedResponseRole
+                    + this.#recommendedResponseRole
                     + ". Do so by completing the statement : \" My answer to your question is as follows :\""
             });
             const response = await openai.chat.completions.create({
@@ -157,7 +159,7 @@ export default class Framework {
         }
     }
 
-    async #chat(prompt: string, includeInHistory: boolean, useConsensus: boolean): Promise<Array<string>> {
+    async #chat(prompt: string, includeInHistory: boolean, useConsensus: boolean): Promise<string> {
         let response: string;
         if (useConsensus) {
             response = await this.#responseConsensus(prompt);
@@ -176,11 +178,18 @@ export default class Framework {
         this.#logger?.info(response, { tags: "response" });
         this.#logger?.info(`total_input_tokens: ${this.#inputTokens}; total_output_tokens: ${this.#outputTokens}`, { tags: "tokens" });
 
-        if (this.#problem.RecommendedResponseRole !== null) {
-            return [response, "", await this.#recommendResponse()];
+        /*let responseArray = response.split("\n");
+        if (this.#recommendedResponseRole !== null) {
+            return responseArray.concat("", await this.#recommendResponse());
         }
         else {
-            return [response];
+            return responseArray;
+        }*/
+        if (this.#recommendedResponseRole !== null) {
+            return response + "\n\n" + await this.#recommendResponse();
+        }
+        else {
+            return response;
         }
     }
 }

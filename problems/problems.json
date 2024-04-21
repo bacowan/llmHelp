@@ -1,32 +1,45 @@
 {
     "problems": [
         {
-            "Title": "CustomOnTheRightTrack",
-            "RecommendedResponseRole": "on the right track, but need a little nudge",
-            "Description": "Write a function in python which takes as input a list of integers and returns the largest one, without using the buitin max() function.\n\nExamples:\n\nInput : [1, 2, 3, 4, 5]\nOutput : 5\n\nInput : [-1, 19, 6, 19, 6, 6]\nOutput : 19",
-            "DescriptionJapanese": "組み込みのmax()という関数を使わずに、入力として整数のリストを受け取り、最大のものを返す関数をpythonで書いてください。\n\nExamples:\n\nInput : [1, 2, 3, 4, 5]\nOutput : 5\n\nInput : [-1, 19, 6, 19, 6, 6]\nOutput : 19"
+            "Title": "dictionary",
+            "Description": "Given a dictionary in Python, write a Python program to find the sum of all items in the dictionary\n\nExamples:\n\nInput : {'a': 100, 'b':200, 'c':300}\nOutput : 600\n\nInput : {'x': 25, 'y':18, 'z':45}\nOutput : 88"
         },
         {
-            "Title": "CustomNeedHelp",
-            "RecommendedResponseRole": "really stuck",
-            "Description": "Write a function in python which takes as input a list of integers and returns the largest one, without using the buitin max() function.\n\nExamples:\n\nInput : [1, 2, 3, 4, 5]\nOutput : 5\n\nInput : [-1, 19, 6, 19, 6, 6]\nOutput : 19",
-            "DescriptionJapanese": "組み込みのmax()という関数を使わずに、入力として整数のリストを受け取り、最大のものを返す関数をpythonで書いてください。\n\nExamples:\n\nInput : [1, 2, 3, 4, 5]\nOutput : 5\n\nInput : [-1, 19, 6, 19, 6, 6]\nOutput : 19"
+            "Title": "list reverse",
+            "Description": "Given a list, write a Python program to swap first and last element of the list.\n\nExamples:\n\nInput : [12, 35, 9, 56, 24]\nOutput : [24, 35, 9, 56, 12]\n\nInput : [1, 2, 3]\nOutput : [3, 2, 1]"
+        },
+        {
+            "Title": "recursion",
+            "Description": "Given a number N and power P, the task is to find the power of a number ( i.e. NP ) using recursion.\n\nExamples:\n\nInput: N = 2 , P = 3\nOutput: 8\n\nInput: N = 5 , P = 2\nOutput: 25"
+        },
+        {
+            "Title": "set intersection",
+            "Description": "Given two lists a, b. Check if two lists have at least one element common in them.\n\nExamples:\n\nInput : a = [1, 2, 3, 4, 5]\n        b = [5, 6, 7, 8, 9]\nOutput : True\n\nInput : a=[1, 2, 3, 4, 5]\n        b=[6, 7, 8, 9]\nOutput: False"
+        },
+        {
+            "Title": "square matrix",
+            "Description": "Given an integer N. The task is to generate a square matrix of ( n x n ) having the elements ranging from 1 to n^2 with the following conditions:\n\n- The elements of the matrix should be distinct i.e used only once\n- Numbers ranging from 1 to n^2\n- Every sub-matrix you choose should have the sum of opposite corner elements as even i.e sum of top left and bottom right should be even and the sum of top right and bottom left element should be even\nThese properties should apply to all the submatrices of the matrix. You need to generate an Even Sub-Matrix\n\nExamples:\n\nInput: 2\nOutput: 1 2\n4 3\nExplanation: Here sum of 1+3=4 is even and 2+4=6 is even\n\nInput: 4\nOutput: 1 2 3\n4 5 6\n7 8 9\nExplanation: The sub matrix [1 2 4 5], [2 3 5 6], [4 5 7 8], [5 6 8 9], [1 2 3 4 5 6 7 8 9] satisfies the condition of opposite corner elements having even sum"
+        },
+        {
+            "Title": "string palendrome",
+            "Description": "Given a string. the task is to check if the string is symmetrical and palindrome or not. A string is said to be symmetrical if both the halves of the string are the same and a string is said to be a palindrome string if one half of the string is the reverse of the other half or if a string appears same when read forward or backward.\n\nExamples:\n\nInput: khokho\nOutput:\nThe entered string is symmetrical\nThe entered string is not palindrome\n\nInput: amaama\nOutput:\nThe entered string is symmetrical\nThe entered string is palindrome"
+        },
+        {
+            "Title": "tripple cube",
+            "Description": "Given a list of numbers of list, write a Python program to create a list of tuples having first element as the number and second element as the cube of the number.\n\nExamples:\n\nInput: list = [1, 2, 3]\nOutput: [(1, 1), (2, 8), (3, 27)]\n\nInput: list = [9, 5, 6]\nOutput: [(9, 729), (5, 125), (6, 216)]"
         },
         {
             "Title": "Easy",
-            "RecommendedResponseRole": null,
             "Description": "Write a function in python which takes as input a list of integers and returns the largest one, without using the buitin max() function.\n\nExamples:\n\nInput : [1, 2, 3, 4, 5]\nOutput : 5\n\nInput : [-1, 19, 6, 19, 6, 6]\nOutput : 19",
             "DescriptionJapanese": "組み込みのmax()という関数を使わずに、入力として整数のリストを受け取り、最大のものを返す関数をpythonで書いてください。\n\nExamples:\n\nInput : [1, 2, 3, 4, 5]\nOutput : 5\n\nInput : [-1, 19, 6, 19, 6, 6]\nOutput : 19"
         },
         {
             "Title": "Medium",
-            "RecommendedResponseRole": null,
             "Description": "Implement insertion sort; it should take as input a list, modify the list in place, and return the sorted list.\n\nExamples:\n\nInput : [12, 11, 13, 5, 6]\nOutput : [5, 6, 11, 12, 13]\n\nInput : [5, -1, 0, -3]\nOutput : [-3, -1, 0, 5]",
             "DescriptionJapanese": "挿入ソートを実装してください。リストを入力として受け取り、in-placeでを変更し、ソートされたリストをリターンするべきです。\n\nExamples:\n\nInput : [12, 11, 13, 5, 6]\nOutput : [5, 6, 11, 12, 13]\n\nInput : [5, -1, 0, -3]\nOutput : [-3, -1, 0, 5]"
         },
         {
             "Title": "Difficult",
-            "RecommendedResponseRole": null,
             "Description": "Implement a simple system to transfer funds between two bank accounts: use the given BankAccount class, finish the given `transfer` function (feel free to add code outside of the `transfer` function, but do not edit the `get_balance` or `set_balance` methods). The transfer function should subtract the amount to transfer from account_from's balance and add it to account_to's balance. The `transfer` function should be thread safe. Note that you should not call the `balance` member variable directly, but instead use the provided getter and setter.\n\nimport threading\nimport time\n\nclass BankAccount:\n\tdef __init__(self, balance):\n\t\tself.balance = balance\n\tdef get_balance(self):\n\t\tret = self.balance\n\t\t# simulate network delay\n\t\ttime.sleep(1)\n\t\treturn ret\n\tdef set_balance(self, val):\n\t\tself.balance = val\ndef transfer_funds(account_from, account_to, amount):\n\tpass",
             "DescriptionJapanese": "与えられたBankAccountクラスを使用して、与えられた`transfer`関数を完成させてください（自由で`transfer` 関数の外側にコードを編集してもいいですが、`get_balance`というメソッドと`set_balance`というメソッドを編集しないでください）。`transfer`という関数は、account_fromの残高から送金額を引き、account_toの残高に追加するべきです。`transfer`という関数はスレッドセーフでなければならなりません。`balance`というメンバ変数を直接使はず、提供されているゲッターとセッターを使用してください。\n\nimport threading\nimport time\n\nclass BankAccount:\n\tdef __init__(self, balance):\n\t\tself.balance = balance\n\tdef get_balance(self):\n\t\tret = self.balance\n\t\t# simulate network delay\n\t\ttime.sleep(1)\n\t\treturn ret\n\tdef set_balance(self, val):\n\t\tself.balance = val\ndef transfer_funds(account_from, account_to, amount):\n\tpass"
         }

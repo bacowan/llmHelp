@@ -12,6 +12,7 @@ const configPath = 'config/config.json';
 let logger : winston.Logger;
 let chatGptModel : string;
 let userLanguage : "En" | "Jp";
+let recommendedResponseRole : string | null;
 let lang : { [key: string]: { [lang: string]: string } };
 let useFramework : boolean = true;
 
@@ -57,6 +58,7 @@ async function initializeConfig(panel: vscode.WebviewPanel, context: vscode.Exte
 		const configAsJson = JSON.parse(config);
 		chatGptModel = configAsJson.chat_gpt_model as string;
 		userLanguage = configAsJson.user_language as "En" | "Jp";
+		recommendedResponseRole = configAsJson.recommended_response_role as string | null;
 		useFramework = configAsJson.use_framework as boolean;
 		const logFolderPath = configAsJson.log_folder_path as string;
 		const currentDateTime = new Date();
@@ -127,26 +129,26 @@ function initializeHandlers(context: vscode.ExtensionContext, panel: vscode.Webv
 					return;
 				case 'initialize':
 					const problem = message.data as { Description: string, Title: string, RecommendedResponseRole: string | null };
-					framework.initialize(problem, chatGptModel, userLanguage, lang, useFramework );
+					framework.initialize(problem, chatGptModel, userLanguage, lang, recommendedResponseRole, useFramework );
 					panel.webview.postMessage({ command: "return" });
 					return;
 				case 'prompt':
-					let response : Array<string>;
+					let response : string;
 					try {
 						const code = editor.document.getText();
 						response = await framework.sendPrompt(message.data, code);
 					}
 					catch (e) {
 						if (typeof e === "string") {
-							response = [e];
+							response = e;
 						} else if (e instanceof Error) {
-							response = [(e as Error).message];
+							response = (e as Error).message;
 						}
 						else {
 							response = (e as any)?.toString();
 						}
 						logger?.error(response);
-						response = ["Uh oh! Something went wrong: " + response];
+						response = "Uh oh! Something went wrong: " + response;
 					}
 					panel.webview.postMessage({ command: "return", data: response });
 					return;

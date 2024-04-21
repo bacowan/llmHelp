@@ -25,18 +25,36 @@ function addMessage(text, role) {
     userMessageBubble.classList.add(role);
     userMessageTextP = document.createElement("p");
 
-    if (Array.isArray(text)) {
-        for (let x = 0; x < text.length; x++) {
-            userMessageText = document.createTextNode(text[x]);
-            userMessageTextP.appendChild(userMessageText);
-            if (x < text.length - 1) {
-                userMessageTextP.appendChild(document.createElement("br"));
+    const codeBreaks = text.split("```");
+    for (let x = 0; x < codeBreaks.length; x++) {
+        // alternates between non-code (even) and code (odd)
+        if (x % 2 === 0) {
+            const lineBreaks = codeBreaks[x].split("\n");
+            for (let y = 0; y < lineBreaks.length; y++) {
+                userMessageTextP.appendChild(document.createTextNode(lineBreaks[y]));
+                if (x !== codeBreaks[x].length - 1 && y !== lineBreaks.length - 1) {
+                    userMessageTextP.appendChild(document.createElement("br"));
+                }
             }
         }
-    }
-    else {
-        userMessageText = document.createTextNode(text);
-        userMessageTextP.appendChild(userMessageText);
+        else {
+            const lineBreaks = codeBreaks[x].split("\n");
+            const userMessageCode = document.createElement("pre");
+            userMessageCode.style.fontFamily = "'Courier New', Courier, monospace";
+            userMessageCode.style.backgroundColor = "#f0f0f0";
+            userMessageCode.style.padding = "5px";
+            userMessageCode.style.borderRadius = "3px";
+            userMessageCode.style.whiteSpace = "pre-wrap";
+            userMessageTextP.appendChild(userMessageCode);
+
+            // the first line defines the language and can be ignored
+            for (let y = 1; y < lineBreaks.length; y++) {
+                userMessageCode.appendChild(document.createTextNode(lineBreaks[y]));
+                if (x !== codeBreaks.length - 1 && y !== lineBreaks.length - 1) {
+                    userMessageCode.appendChild(document.createElement("br"));
+                }
+            }
+        }
     }
 
     userMessageBubble.appendChild(userMessageTextP);
@@ -112,8 +130,8 @@ function createDot(index) {
 function onConfigLoaded(newConfig) {
     config = newConfig;
     currentProblem = null;
-    const options = config.problems.map((p, i) => `${i + 1}. ${p.Title}`);
-    options.unshift(config.lang['SelectNumberOfProblem'][config.userLanguage]);
+    let options = config.problems.map((p, i) => `${i + 1}. ${p.Title}`).join("\n");
+    options = config.lang['SelectNumberOfProblem'][config.userLanguage] + "\n" + options;
     addMessage(options, 'bot');
 }
 
