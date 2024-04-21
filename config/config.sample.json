@@ -1,3 +1,6 @@
 {
-    "log_file_path": ""
+    "log_file_path": "",
+    "chat_gpt_model": "gpt-4-0125-preview",
+    "user_language": "En",
+    "use_framework": true
 }
