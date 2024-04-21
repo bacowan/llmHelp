@@ -79,10 +79,14 @@ async function setNewProblem(value) {
         await postAsyncMessage("initialize", currentProblem);
         loadingDiv.remove();
 
-        addMessage("Hello! I can assist you with your homework assignment! What do you need help with?", "bot");
+        addMessage(config.lang['ICanHelpWithHomework'][config.userLanguage], "bot");
     }
     else {
-        addMessage(`Please input a number from 1 to ${config.problems.length}`, "bot");
+        addMessage(
+            config.lang['InputFrom1ToStart'][config.userLanguage]
+                + config.problems.length
+                + config.lang['InputFrom1ToEnd'][config.userLanguage],
+            "bot");
     }
 }
 
@@ -109,7 +113,7 @@ function onConfigLoaded(newConfig) {
     config = newConfig;
     currentProblem = null;
     const options = config.problems.map((p, i) => `${i + 1}. ${p.Title}`);
-    options.unshift('Please input the number of the problem you are working on:');
+    options.unshift(config.lang['SelectNumberOfProblem'][config.userLanguage]);
     addMessage(options, 'bot');
 }
 
@@ -118,7 +122,7 @@ window.addEventListener('message', event => {
 
     switch (message.command) {
         case 'loadConfig':
-            onConfigLoaded(JSON.parse(message.data));
+            onConfigLoaded(message.data);
             break;
     }
 });

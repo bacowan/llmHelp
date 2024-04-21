@@ -7,9 +7,13 @@ const fs = require('fs').promises;
 const framework : Framework = new Framework();
 
 const problemsPath = 'problems/problems.json';
+const langPath = 'config/lang.json';
 const configPath = 'config/config.json';
-const chatGptModel = 'gpt-4-0125-preview';
 let logger : winston.Logger;
+let chatGptModel : string;
+let userLanguage : "En" | "Jp";
+let lang : { [key: string]: { [lang: string]: string } };
+let useFramework : boolean = true;
 
 export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -26,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 			);
 
-			initializeLogging(panel, context);
+			initializeConfig(panel, context);
 
 			const editor = vscode.window.activeTextEditor;
 
@@ -45,27 +49,36 @@ function padZero(num: number) {
     return num < 10 ? `0${num}` : num;
 }
 
-async function initializeLogging(panel: vscode.WebviewPanel, context: vscode.ExtensionContext) {
-	const fullConfigPath = vscode.Uri.joinPath(context.extensionUri, configPath);
-	const pathUri = panel.webview.asWebviewUri(fullConfigPath);
-	const config = await fs.readFile(pathUri.fsPath, 'utf8');
-	const configAsJson = JSON.parse(config);
-	const logFolderPath = configAsJson.log_folder_path as string;
-	const currentDateTime = new Date();
-	const logFileName = `log_${currentDateTime.getFullYear()}-${padZero(currentDateTime.getMonth() + 1)}-${padZero(currentDateTime.getDate())}_${padZero(currentDateTime.getHours())}-${padZero(currentDateTime.getMinutes())}-${padZero(currentDateTime.getSeconds())}.log`;
-	const logFilePath = path.join(logFolderPath, logFileName);
-
-	logger = winston.createLogger({
-		format: winston.format.combine(
-            winston.format.timestamp(),
-            winston.format.json()
-        ),
-		transports: [
-			new winston.transports.File({ filename: logFilePath })
-		]
-	});
-	framework.setLogger(logger);
-	logger.info("initialized");
+async function initializeConfig(panel: vscode.WebviewPanel, context: vscode.ExtensionContext) {
+	try {
+		const fullConfigPath = vscode.Uri.joinPath(context.extensionUri, configPath);
+		const pathUri = panel.webview.asWebviewUri(fullConfigPath);
+		const config = await fs.readFile(pathUri.fsPath, 'utf8');
+		const configAsJson = JSON.parse(config);
+		chatGptModel = configAsJson.chat_gpt_model as string;
+		userLanguage = configAsJson.user_language as "En" | "Jp";
+		useFramework = configAsJson.use_framework as boolean;
+		const logFolderPath = configAsJson.log_folder_path as string;
+		const currentDateTime = new Date();
+		const logFileName = `log_${currentDateTime.getFullYear()}-${padZero(currentDateTime.getMonth() + 1)}-${padZero(currentDateTime.getDate())}_${padZero(currentDateTime.getHours())}-${padZero(currentDateTime.getMinutes())}-${padZero(currentDateTime.getSeconds())}.log`;
+		const logFilePath = path.join(logFolderPath, logFileName);
+	
+		logger = winston.createLogger({
+			format: winston.format.combine(
+				winston.format.timestamp(),
+				winston.format.json()
+			),
+			transports: [
+				new winston.transports.File({ filename: logFilePath })
+			]
+		});
+		framework.setLogger(logger);
+		logger.info("initialized");
+	}
+	catch (err) {
+		const hi = 0;
+		// TODO: Error handling
+	}
 }
 			
 function loadExternalFile(oldFileName: string, html: string, context: vscode.ExtensionContext, panel: vscode.WebviewPanel): string {
@@ -84,11 +97,22 @@ async function loadHtml(context: vscode.ExtensionContext, panel: vscode.WebviewP
 
 async function initializeBot(context: vscode.ExtensionContext, panel: vscode.WebviewPanel) {
 	try {
-		const onDiskPath = vscode.Uri.joinPath(context.extensionUri, problemsPath);
-		const pathUri = panel.webview.asWebviewUri(onDiskPath);
-		const data = await fs.readFile(pathUri.fsPath, 'utf8');
+		const problemsOnDiskPath = vscode.Uri.joinPath(context.extensionUri, problemsPath);
+		const problemsPathUri = panel.webview.asWebviewUri(problemsOnDiskPath);
+		const problems = await fs.readFile(problemsPathUri.fsPath, 'utf8');
+
+		const langOnDiskPath = vscode.Uri.joinPath(context.extensionUri, langPath);
+		const langPathUri = panel.webview.asWebviewUri(langOnDiskPath);
+		lang = JSON.parse(await fs.readFile(langPathUri.fsPath, 'utf8'));
+
+		const data = {
+			problems: JSON.parse(problems).problems,
+			userLanguage: userLanguage,
+			lang: lang
+		};
 		panel.webview.postMessage({ command: "loadConfig", data: data });
 	} catch (err) {
+		const x = 0;
 		// TODO: Error handling
 	}
 }
@@ -102,27 +126,27 @@ function initializeHandlers(context: vscode.ExtensionContext, panel: vscode.Webv
 					await initializeBot(context, panel);
 					return;
 				case 'initialize':
-					const problem = message.data as { Description: string, Title: string };
-					framework.initialize(problem, chatGptModel);
+					const problem = message.data as { Description: string, Title: string, RecommendedResponseRole: string | null };
+					framework.initialize(problem, chatGptModel, userLanguage, lang, useFramework );
 					panel.webview.postMessage({ command: "return" });
 					return;
 				case 'prompt':
-					let response : string;
+					let response : Array<string>;
 					try {
 						const code = editor.document.getText();
 						response = await framework.sendPrompt(message.data, code);
 					}
 					catch (e) {
 						if (typeof e === "string") {
-							response = e;
+							response = [e];
 						} else if (e instanceof Error) {
-							response = (e as Error).message;
+							response = [(e as Error).message];
 						}
 						else {
 							response = (e as any)?.toString();
 						}
 						logger?.error(response);
-						response = "Uh oh! Something went wrong: " + response;
+						response = ["Uh oh! Something went wrong: " + response];
 					}
 					panel.webview.postMessage({ command: "return", data: response });
 					return;

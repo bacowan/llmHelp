@@ -9,11 +9,14 @@ export default class Framework {
     #conversationHistory : ChatCompletionMessageParam[] = [];
     #isInitialized = false;
     #chatGptModel = "";
-    #problem: { Description: string, Title: string } = { Description: "", Title: "" };
+    #problem: { Description: string, Title: string, RecommendedResponseRole: string | null } = { Description: "", Title: "", RecommendedResponseRole: null };
     #code = "";
     #responseConsensusSteps: number = 3;
     #inputTokens = 0;
     #outputTokens = 0;
+    #lang : { [key: string]: { [lang: string]: string } } = {};
+    #userLanguage : "En" | "Jp" = "En";
+    #useFramework : boolean = true;
 
     get isInitialized() { return this.#isInitialized; }
 
@@ -32,11 +35,14 @@ export default class Framework {
         }
     }
 
-    initialize(problem: { Description: string, Title: string }, chatGptModel: string, responseConsensusSteps: number = 3) {
+    initialize(problem: { Description: string, Title: string, RecommendedResponseRole: string | null }, chatGptModel: string, userLanguage: "En" | "Jp", lang : { [key: string]: { [lang: string]: string } }, useFramework: boolean, responseConsensusSteps: number = 3) {
         this.#chatGptModel = chatGptModel;
         this.#isInitialized = true;
         this.#problem = problem;
         this.#conversationHistory = [];
+        this.#userLanguage = userLanguage;
+        this.#lang = lang;
+        this.#useFramework = useFramework;
         this.#responseConsensusSteps = responseConsensusSteps;
         this.#logger?.info("chatGptModel set to " + chatGptModel, { tags: "initializing" });
         this.#logger?.info("Problem set to " + problem.Title, { tags: "initializing" });
@@ -51,51 +57,36 @@ export default class Framework {
         }
     }
 
-    async #sendInitialPrompt(question: string, code: string) : Promise<string> {
+    async #sendInitialPrompt(question: string, code: string) : Promise<Array<string>> {
         this.#code = this.#stripExclude(code);
-        const system_prompt = "I have been given the following instructions:\n"
+        let system_prompt = this.#lang["IHaveBeenGivenTheFollowingInstructions"][this.#userLanguage] + "\n"
             + this.#problem.Description + "\n\n"
-            + "I have written the following code:\n"
-            + this.#code + "\n\n"
-            + "I would like you to act as a teacher: "
-            + "ask me a question about why I have implemented "
-            + "the code this way in order for me to come to the conclusion myself. "
-            + "To do so, I would like you to use the following techniques:\n"
-            + "- Reframe: Teacher rephrases a student answer to improve expression. For example:\n"
-            + "  - Teacher: What does the sum function do?"
-            + "  - Student: It sums the values of the dictionary."
-            + "  - Teacher: It sums the values, as opposed to the keys, right?"
-            + "- Reframe scientifically: Teacher rephrases student answer to correct science. For example:\n"
-            + "  - Teacher: What does the code that starts with `public class MyClass` do?"
-            + "  - Student: That defines a new object called 'MyClass'"
-            + "  - Teacher: It defines a new class called 'MyClass'"
-            + "- Elaborate: Teacher asks for elaboration of a response (to say more about it). For example:\n"
-            + "  - Teacher: What sort of issues arise if you remove this statement?"
-            + "  - Student: It errors."
-            + "  - Teacher: How come? What error?"
-            + "- Prompt and scaffold: Teacher provides cues before or after a question to prompt/scaffold student's responses. For example:\n"
-            + "  - Teacher: Do you think a pointer or a reference would work better here?"
-            + "  - Student: I'm not too sure."
-            + "  - Teacher: Remember how I mentioned earlier the differences between them. Think about those."
-            + "- Refocus: Teacher summarises to consolidate and refocus the discussion. For example:\n"
-            + "  - Teacher: So to summarize what we've gone over so far..."
-            + "- Teacher uptake: Teacher asks a follow-up question that includes (builds on) part of a previous answer. For example:"            + "  - Teacher: Why did you use a list here?"
-            + "  - Student: So that I can add items to it."
-            + "  - Teacher: Are there any other properties of lists that might come in useful?";
+            + this.#lang["IHaveWrittenFollowingCode"][this.#userLanguage] + "\n"
+            + this.#code
+        if (this.#useFramework) {
+            system_prompt += "\n\n" + this.#lang["LLMSystemInstructions"][this.#userLanguage];
+        }
         this.#conversationHistory.push({role: "system", content: system_prompt});
 
         return await this.#chat(question, true, false);
     }
 
-    async #sendNewPrompt(prompt: string, code: string) : Promise<string> {
-        const newCode = this.#stripExclude(code);
-        let fullPrompt = prompt + "\n"
-            + "Please keep helping me, and remember to act as a teacher: don't give me any explicit answers or code.";
-        if (this.#code !== newCode) {
-            this.#code = newCode;
-            fullPrompt += "\n\nNote that I have changed my code to the following:\n\n" + newCode;
+    async #sendNewPrompt(prompt: string, code: string) : Promise<Array<string>> {
+        if (this.#problem.RecommendedResponseRole !== null && prompt === "x") {
+            return [await this.#recommendResponse()];
         }
-        return this.#chat(fullPrompt);
+        else {
+            const newCode = this.#stripExclude(code);
+            let fullPrompt = prompt;
+            if (this.#useFramework) {
+                fullPrompt += "\n" + this.#lang["ActAsATeacher"][this.#userLanguage];
+            }
+            if (this.#code !== newCode) {
+                this.#code = newCode;
+                fullPrompt += "\n\n" + this.#lang["CodeChanges"][this.#userLanguage] + "\n\n" + newCode;
+            }
+            return await this.#chat(fullPrompt, true, this.#useFramework);
+        }
     }
 
     async #createChatCompletion(values: OpenAI.Chat.Completions.ChatCompletionMessageParam[]): Promise<string> {
@@ -123,7 +114,7 @@ export default class Framework {
             responses.push(response);
             this.#logger?.info(`${i + 1}: ${response}`, { tags: "consensus-response" });
         }
-        let consensusPrompt = "I have been given the following responses to a prompt that I submitted. I want to select a prompt that best matches the other prompts. Please give me the number of that prompt, and respond with only the number.";
+        let consensusPrompt = this.#lang["ConsensusRequest"][this.#userLanguage];
         for (let i = 0; i < this.#responseConsensusSteps; i++) {
             consensusPrompt += `\n${i + 1}. ${responses[i]}`;
         }
@@ -142,7 +133,31 @@ export default class Framework {
         }
     }
 
-    async #chat(prompt: string, includeInHistory: boolean = true, useConsensus: boolean = true): Promise<string> {
+    async #recommendResponse(): Promise<string> {
+        if (this.#problem.RecommendedResponseRole !== null) {
+            const values = this.#conversationHistory.filter(m => m.role !== "system");
+            values.push({
+                role: "user",
+                content: "Give me a sample response, but pretend you're a student who's "
+                    + this.#problem.RecommendedResponseRole
+                    + ". Do so by completing the statement : \" My answer to your question is as follows :\""
+            });
+            const response = await openai.chat.completions.create({
+                messages: values,
+                model: this.#chatGptModel
+            });
+            if (response.usage !== undefined && response.usage !== null) {
+                this.#inputTokens += response.usage.prompt_tokens;
+                this.#outputTokens += response.usage.completion_tokens;
+            }
+            return response['choices'][0]['message']['content'] ?? "";
+        }
+        else {
+            return "";
+        }
+    }
+
+    async #chat(prompt: string, includeInHistory: boolean, useConsensus: boolean): Promise<Array<string>> {
         let response: string;
         if (useConsensus) {
             response = await this.#responseConsensus(prompt);
@@ -161,6 +176,11 @@ export default class Framework {
         this.#logger?.info(response, { tags: "response" });
         this.#logger?.info(`total_input_tokens: ${this.#inputTokens}; total_output_tokens: ${this.#outputTokens}`, { tags: "tokens" });
 
-        return response;
+        if (this.#problem.RecommendedResponseRole !== null) {
+            return [response, "", await this.#recommendResponse()];
+        }
+        else {
+            return [response];
+        }
     }
 }

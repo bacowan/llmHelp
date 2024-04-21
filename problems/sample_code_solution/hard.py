@@ -18,7 +18,7 @@ lock = threading.Lock()
 def transfer_funds(account_from, account_to, amount):
     with lock:
         account_from.balance = account_from.get_balance() - amount
-        account_to.balance = account_to.balance.get_balance() + amount
+        account_to.balance = account_to.get_balance() + amount
 
 # exclude
 account1 = BankAccount(1000)
