@@ -2,6 +2,10 @@
     "log_file_path": "",
     "chat_gpt_model": "gpt-4-0125-preview",
     "user_language": "En",
+<<<<<<< HEAD
     "use_framework": true,
     "recommended_response_role": null
+=======
+    "use_framework": true
+>>>>>>> e17b87a4db1fd19a131c2ee2431ce6de24d51358
 }
