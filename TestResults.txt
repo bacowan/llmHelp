@@ -1,0 +1,179 @@
+Individual responses:
+dictionary_sum:
+on the right track:
+useful
+useful
+useful
+useful
+useful
+useful
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
+
+
+list_reverse:
+on the right track:
+useful
+useful
+useful
+Repeated Response
+useful
+useful
+
+a little more lost:
+useful
+Misleading
+Misleading
+useful
+useful
+useful
+
+recursion:
+on the right track:
+useful
+useful
+Misleading
+useful
+useful
+useful
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
+
+set_intersection:
+on the right track:
+useful
+useful
+Repeated Response
+Repeated Response
+useful
+Misleading
+(failed)
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
+
+square_matrix:
+on the right track:
+useful
+useful
+useful
+useful
+Misleading
+Misleading
+
+a little more lost:
+useful
+useful
+useful
+Misleading
+useful
+Misleading
+
+string_palendrome:
+on the right track:
+useful
+Repeated response
+useful
+useful
+useful
+useful
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
+
+tripple cube:
+on the right track:
+useful
+useful
+useful
+useful
+useful
+useful
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
+
+Overall Conversations:
+dictionary_sum:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+list_reverse:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+recursion:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+set_intersection:
+on the right track:
+fail
+
+a little more lost:
+pass
+
+square_matrix:
+on the right track:
+fail
+
+a little more lost:
+fail
+
+string_palendrome:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+tripple cube:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+
+
+
+Note: Should also do the same test as "validation", just to see how it behaves with the new framework and without the validation step.
+
+Things I noticed:
+It seems to preform better if the student is more lost, as if if can get them 90% of the way there, but if the student is already 90% of the way there then it has a bit of trouble helping them.
