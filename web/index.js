@@ -67,7 +67,7 @@ function addMessage(text, role) {
 async function sendNewPrompt(text) {
     loadingDiv = createLoadingDots();
     const response = await postAsyncMessage("prompt", text);
-    loadingDiv.remove();
+    removeLoadingDots(loadingDiv);
     addMessage(response, "bot");
 }
 
@@ -95,7 +95,7 @@ async function setNewProblem(value) {
 
         loadingDiv = createLoadingDots();
         await postAsyncMessage("initialize", currentProblem);
-        loadingDiv.remove();
+        removeLoadingDots(loadingDiv);
 
         addMessage(config.lang['ICanHelpWithHomework'][config.userLanguage], "bot");
     }
@@ -109,6 +109,8 @@ async function setNewProblem(value) {
 }
 
 function createLoadingDots() {
+    document.getElementById("send-button").disabled = true;
+    document.getElementById("message-box").disabled = true;
     chatContainer = document.getElementById("chat-container");
     const container = document.createElement("div");
     container.classList.add("loading-indicator");
@@ -118,6 +120,12 @@ function createLoadingDots() {
     chatContainer.appendChild(container);
     chatContainer.scrollTop = chatContainer.scrollHeight;
     return container;
+}
+
+function removeLoadingDots(dotDiv) {
+    document.getElementById("send-button").disabled = false;
+    document.getElementById("message-box").disabled = false;
+    dotDiv.remove();
 }
 
 function createDot(index) {
