@@ -1,0 +1,143 @@
+Individual responses:
+dictionary_sum:
+on the right track:
+useful
+useful
+useful
+useful
+useful
+useful
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
+
+
+list_reverse:
+on the right track:
+useful
+useful
+useful
+useful
+useful
+useful
+
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+misleading (asked if my change on its own would work (it would), but was told that more was needed)
+
+recursion:
+on the right track:
+useful
+useful
+useful
+useful
+useful
+useful
+
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
+
+
+set_intersection:
+on the right track:
+useful
+useful
+useful
+useful
+misleading (it said that there's no way to break out of multiple loops, but you can use return to do so)
+useful
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
+
+
+square_matrix:
+on the right track:
+
+a little more lost:
+
+string_palendrome:
+on the right track:
+
+a little more lost:
+
+tripple cube:
+on the right track:
+
+a little more lost:
+
+Overall Conversations:
+dictionary_sum:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+list_reverse:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+recursion:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+set_intersection:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+square_matrix:
+on the right track:
+
+a little more lost:
+
+string_palendrome:
+on the right track:
+
+a little more lost:
+
+tripple cube:
+on the right track:
+
+a little more lost:
+
+
+
+
+Note: Should also do the same test as "validation", just to see how it behaves with the new framework and without the validation step.
+
+Things I noticed:
+GPT 4 seems to be much more verbose. I'd say it's better, but it's likely that the framework should be configurable for each LLM that it's built for.
+Sometimes it lists all of the techniques it's using. This isn't a bad thing nessisarily, but makes it a little verbose.
+In turn, responses felt slower
+I feel like the responses are much more detailed, so whether responses are "useful" or not is really determined by the individual students

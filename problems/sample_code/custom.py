@@ -1,8 +1,16 @@
-def returnSum(myDict):
+def common_data(list1, list2):
+    result = False
  
-    list = []
-    for i in myDict:
-        list.append(i)
-    final = sum(list)
+    # traverse in the 1st list
+    for x in list1:
  
-    return final
+        # traverse in the 2nd list
+        for y in list2:
+   
+            # if one common
+            if x == y:
+                result = True
+            else:
+                result = False
+                 
+    return result
