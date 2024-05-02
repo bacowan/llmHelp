@@ -74,11 +74,29 @@ useful
 
 square_matrix:
 on the right track:
+useful
+useful
+useful
+useful
+useful
+useful
 
 a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
 
 string_palendrome:
 on the right track:
+useful
+useful
+useful
+useful
+useful
+useful
 
 a little more lost:
 
@@ -118,11 +136,14 @@ pass
 
 square_matrix:
 on the right track:
+pass
 
 a little more lost:
+pass
 
 string_palendrome:
 on the right track:
+pass
 
 a little more lost:
 

@@ -1,4 +1,4 @@
-Implement a simple system to transfer funds between two bank accounts: using the given BankAccount class, finish the given `TransferFunds` function (feel free to add code outside of the `TransferFunds` function, but do not edit the `GetBalance` or `SetBalance` methods). The TransferFunds function should subtract the amount to transfer from account_from's balance and add it to account_to's balance. The `transferFunds` function should be thread safe. Note that you should not call the `balance` member variable directly, but instead use the provided getter and setter.
+Implement a simple system to transfer funds between two bank accounts: using the given BankAccount class, finish the given `transferFunds` function (feel free to add code outside of the `transferFunds` function, but do not edit the `getBalance` or `setBalance` methods). The transferFunds function should subtract the amount to transfer from accountFrom's balance and add it to accountTo's balance. The `transferFunds` function should be thread safe. Note that you should not call the `balance` member variable directly, but instead use the provided getter and setter.
 
 package problems.sample_code_solution;
 
@@ -9,7 +9,7 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public int GetBalance() {
+    public int getBalance() {
         try {
             int ret = this.balance;
             // simulate network delay
@@ -21,11 +21,11 @@ public class BankAccount {
         }
     }
     
-    public void SetBalance(int val) {
+    public void setBalance(int val) {
         this.balance = val;
     }
     
-    public static void TransferFunds(BankAccount accountFrom, BankAccount accountTo, int amount) {
+    public static void transferFunds(BankAccount accountFrom, BankAccount accountTo, int amount) {
         throw new UnsupportedOperationException();
     }
 }

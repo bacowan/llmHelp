@@ -9,7 +9,7 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public int GetBalance() {
+    public int getBalance() {
         try {
             int ret = this.balance;
             // simulate network delay
@@ -21,21 +21,21 @@ public class BankAccount {
         }
     }
 
-    public void SetBalance(int val) {
+    public void setBalance(int val) {
         this.balance = val;
     }
 
-    public static void TransferFunds(BankAccount accountFrom, BankAccount accountTo, int amount) {
+    public static void transferFunds(BankAccount accountFrom, BankAccount accountTo, int amount) {
         int currentBalanceFrom = 0;
         int currentBalanceTo = 0;
         synchronized (accountFrom.lock) {
-            currentBalanceFrom = accountFrom.GetBalance();
+            currentBalanceFrom = accountFrom.getBalance();
             synchronized (accountTo.lock) {
-                currentBalanceTo = accountTo.GetBalance();
+                currentBalanceTo = accountTo.getBalance();
             }
         }
-        accountFrom.SetBalance(currentBalanceFrom - amount);
-        accountTo.SetBalance(currentBalanceTo + amount);
+        accountFrom.setBalance(currentBalanceFrom - amount);
+        accountTo.setBalance(currentBalanceTo + amount);
     }
     
 
@@ -46,13 +46,13 @@ public class BankAccount {
         Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                BankAccount.TransferFunds(account1, account2, 200);
+                BankAccount.transferFunds(account1, account2, 200);
             }
         });
         Thread thread2 = new Thread(new Runnable() {
             @Override
             public void run() {
-                BankAccount.TransferFunds(account2, account1, 300);
+                BankAccount.transferFunds(account2, account1, 300);
             }
         });
         thread1.start();

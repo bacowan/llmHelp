@@ -1,4 +1,4 @@
-与えられたBankAccountクラスを使用し、与えられた`TransferFunds`関数を完成させることで、２つのバンクアカウント間で送金を行う簡単なシステムを実装してください（`TranferFunds` 関数の外側に自由にコードを追加してもいいですが、`get_balance`というメソッドと`SetBalance`というメソッドを編集しないでください）。`TransferFunds`という関数は、account_fromの残高から送金額を引き、それをaccount_toの残高に追加します。`TransferFunds`という関数はスレッドセーフでなければなりません。`balance`というメンバ変数を直接使わず、提供されているゲッターとセッターを使用してください。
+与えられたBankAccountクラスを使用し、与えられた`transferFunds`関数を完成させることで、２つのバンクアカウント間で送金を行う簡単なシステムを実装してください（`transferFunds` 関数の外側に自由にコードを追加してもいいですが、`getBalance`というメソッドと`setBalance`というメソッドを編集しないでください）。`transferFunds`という関数は、accountFromの残高から送金額を引き、それをaccountToの残高に追加します。`transferFunds`という関数はスレッドセーフでなければなりません。`balance`というメンバ変数を直接使わず、提供されているゲッターとセッターを使用してください。
 
 package problems.sample_code_solution;
 
@@ -9,7 +9,7 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public int GetBalance() {
+    public int getBalance() {
         try {
             int ret = this.balance;
             // simulate network delay
@@ -21,11 +21,11 @@ public class BankAccount {
         }
     }
     
-    public void SetBalance(int val) {
+    public void setBalance(int val) {
         this.balance = val;
     }
     
-    public static void TransferFunds(BankAccount accountFrom, BankAccount accountTo, int amount) {
+    public static void transferFunds(BankAccount accountFrom, BankAccount accountTo, int amount) {
         throw new UnsupportedOperationException();
     }
 }
