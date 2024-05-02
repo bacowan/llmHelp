@@ -1,0 +1,5 @@
+1. Explain how race conditions can happen
+2. What synchronization mechanism can be used to resolve race conditions?
+3. Explain what a deadlock is
+4. What is one advantage of multithreading?
+5. What is one disadvantage of multithreading?

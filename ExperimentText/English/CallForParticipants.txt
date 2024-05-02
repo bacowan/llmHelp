@@ -1,0 +1,22 @@
+Dear Students,
+
+We invite students to take part in a research experiment designed to test a framework aimed at assisting programming students to learn while completing assignments. Those who participate will be given a small gift.
+
+Overview:
+The experiment consists of two parts:
+    1. Take a short test on your own time (approximately 10 minutes).
+    2. Attend a 20 minute in-person session in the Research Quadrangles, where you will complete programming problems with the help of a ChatGPT-backed plugin, take another quiz, and fill out a survey.
+
+How to Participate:
+    1. Follow this link to reserve a slot: [link]
+    2. Navigate to the week of [date] and select a slot on the calendar for part 2 of the experiment.
+    3. Once selected, you will receive instructions on how to complete Part 1, which should be done at least one week before your scheduled appointment.
+    4. On the day of the appointment, arrive on time at the designated location.
+
+Contact Information:
+For any inquiries, please contact [name] at [email].
+Your participation is crucial to the success of this research, and we appreciate your consideration.
+
+Sincerely,
+[name]
+[affiliation]
