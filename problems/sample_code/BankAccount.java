@@ -9,11 +9,16 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public int GetBalance() throws InterruptedException {
-        int ret = this.balance;
-        // simulate network delay
-        Thread.sleep(1000);
-        return ret;
+    public int GetBalance() {
+        try {
+            int ret = this.balance;
+            // simulate network delay
+            Thread.sleep(1000);
+            return ret;
+        }
+        catch (InterruptedException e) {
+            return this.balance;
+        }
     }
 
     public void SetBalance(int val) {
@@ -21,21 +26,16 @@ public class BankAccount {
     }
 
     public static void TransferFunds(BankAccount accountFrom, BankAccount accountTo, int amount) {
-        try {
-            int currentBalanceFrom = 0;
-            int currentBalanceTo = 0;
-            synchronized (accountFrom.lock) {
-                currentBalanceFrom = accountFrom.GetBalance();
-                synchronized (accountTo.lock) {
-                    currentBalanceTo = accountTo.GetBalance();
-                }
+        int currentBalanceFrom = 0;
+        int currentBalanceTo = 0;
+        synchronized (accountFrom.lock) {
+            currentBalanceFrom = accountFrom.GetBalance();
+            synchronized (accountTo.lock) {
+                currentBalanceTo = accountTo.GetBalance();
             }
-            accountFrom.SetBalance(currentBalanceFrom - amount);
-            accountTo.SetBalance(currentBalanceTo + amount);
         }
-        catch (InterruptedException e) {
-            System.out.println("error: interrupted");
-        }
+        accountFrom.SetBalance(currentBalanceFrom - amount);
+        accountTo.SetBalance(currentBalanceTo + amount);
     }
     
 
