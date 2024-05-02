@@ -6,6 +6,27 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"type": "java",
+			"name": "BankAccount",
+			"request": "launch",
+			"mainClass": "problems.sample_code_solution.BankAccount",
+			"projectName": "llmhelp_7f79fc62"
+		},
+		{
+			"type": "java",
+			"name": "BankAccount",
+			"request": "launch",
+			"mainClass": "problems.sample_code.BankAccount",
+			"projectName": "llmhelp_7f79fc62"
+		},
+		{
+			"type": "java",
+			"name": "hard",
+			"request": "launch",
+			"mainClass": "problems.sample_code.hard",
+			"projectName": "llmhelp_7f79fc62"
+		},
+		{
 			"name": "Run Extension",
 			"type": "extensionHost",
 			"request": "launch",

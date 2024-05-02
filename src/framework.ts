@@ -26,14 +26,22 @@ export default class Framework {
     }
 
     #stripExclude(code: string): string {
-        const index = code.indexOf("# exclude");
-        if (index === -1) {
-            return code;
+        const lines = code.split("\n");
+        let ret : String[] = [];
+        let excluding = false;
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            if (line.startsWith("# exclude_start") || line.startsWith("// exclude_start")) {
+                excluding = true;
+            }
+            else if (line.startsWith("# exclude_stop") || line.startsWith("// exclude_stop")) {
+                excluding = false;
+            }
+            else if (!excluding) {
+                ret.push(line);
+            }
         }
-        else {
-            const test = code.substring(0, index);
-            return test;
-        }
+        return ret.join("\n");
     }
 
     initialize(problem: { Description: string, Title: string }, chatGptModel: string, userLanguage: "En" | "Jp", lang : { [key: string]: { [lang: string]: string } }, recommendedResponseRole: string | null, useFramework: boolean, responseConsensusSteps: number = 3) {
