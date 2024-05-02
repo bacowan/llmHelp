@@ -1,0 +1,20 @@
+与えられたBankAccountクラスを使用し、与えられた`transfer_funds`関数を完成させることで、２つのバンクアカウント間で送金を行う簡単なシステムを実装してください（`transfer_funds` 関数の外側に自由にコードを追加してもいいですが、`get_balance`というメソッドと`set_balance`というメソッドを編集しないでください）。`transfer_funds`という関数は、account_fromの残高から送金額を引き、それをaccount_toの残高に追加します。`transfer_funds`という関数はスレッドセーフでなければなりません。`balance`というメンバ変数を直接使わず、提供されているゲッターとセッターを使用してください。
+
+import threading
+import time
+
+class BankAccount:
+    def __init__(self, balance):
+        self.balance = balance
+
+    def get_balance(self):
+        ret = self.balance
+        # simulate network delay
+        time.sleep(1)
+        return ret
+
+    def set_balance(self, val):
+        self.balance = val
+
+def transfer_funds(account_from, account_to, amount):
+    pass
