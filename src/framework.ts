@@ -118,7 +118,12 @@ export default class Framework {
     }
 
     async #responseConsensus(prompt: string) {
-        const responses = [];
+        const consensusPromises : Promise<string>[] = [];
+        for (let i = 0; i < this.#responseConsensusSteps; i++) {
+            consensusPromises.push(this.#responseConsensusStep(prompt));
+        }
+        const responses = await Promise.all(consensusPromises);
+
         for (let i = 0; i < this.#responseConsensusSteps; i++) {
             const response = await this.#responseConsensusStep(prompt);
             responses.push(response);
@@ -186,13 +191,6 @@ export default class Framework {
         this.#logger?.info(response, { tags: "response" });
         this.#logger?.info(`total_input_tokens: ${this.#inputTokens}; total_output_tokens: ${this.#outputTokens}`, { tags: "tokens" });
 
-        /*let responseArray = response.split("\n");
-        if (this.#recommendedResponseRole !== null) {
-            return responseArray.concat("", await this.#recommendResponse());
-        }
-        else {
-            return responseArray;
-        }*/
         if (this.#recommendedResponseRole !== null) {
             return response + "\n\n" + await this.#recommendResponse();
         }
