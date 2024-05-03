@@ -72,7 +72,7 @@ export default class Framework {
         let system_prompt = this.#lang["IHaveBeenGivenTheFollowingInstructions"][this.#userLanguage] + "\n"
             + this.#problem.Description + "\n\n"
             + this.#lang["IHaveWrittenFollowingCode"][this.#userLanguage] + "\n"
-            + this.#code
+            + this.#code;
         if (this.#useFramework) {
             system_prompt += "\n\n" + this.#lang["LLMSystemInstructions"][this.#userLanguage];
         }
