@@ -24,8 +24,8 @@
         "Jp": "私が提出したプロンプトに対して、以下の回答が与えられました。他のプロンプトと最も一致するプロンプトを選びたい。そのプロンプトの番号だけを教えてください。"
     },
     "ICanHelpWithHomework": {
-        "En": "Hello! I can assist you with your homework assignment! What do you need help with?",
-        "Jp": "こんにちは！あなたの宿題をお手伝いします！何を手伝いますか？"
+        "En": "Hello! I can assist you with your homework assignment! How can I help you?",
+        "Jp": "こんにちは！あなたの宿題をお手伝いします！手伝いましょうか？"
     },
     "InputFrom1ToStart": {
         "En": "Please input a number from 1 to ",
