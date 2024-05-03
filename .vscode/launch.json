@@ -6,6 +6,16 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+            "name": "Python: log parse debug",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "log_parser.py",
+            "args": [
+                "--tag", "tokens", "\"C:\\Users\\bccow\\programming\\logs\\log_2024-04-29_20-16-55.log\""
+            ],
+            "console": "integratedTerminal"
+        },
+		{
 			"type": "java",
 			"name": "BankAccount",
 			"request": "launch",

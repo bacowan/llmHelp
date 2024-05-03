@@ -4,7 +4,7 @@ import json
 import argparse
 
 def parse_logs(file_path, level_filter=None, tags_filter=None):
-    with open(file_path, 'r') as file:
+    with open(file_path, 'r',encoding='utf-8') as file:
         lines = file.readlines()
 
         # Add commas to all lines except the last one
