@@ -1,0 +1,77 @@
+1. 以下のコードでデッドロックが発生する理由を説明してください。
+import threading
+
+lock1 = threading.Lock()
+lock2 = threading.Lock()
+
+def create_deadlock():
+    with lock1:
+        print("Thread 1 acquired lock 1")
+        with lock2:
+            print("Thread 1 acquired lock 2")
+
+    with lock2:
+        print("Thread 2 acquired lock 2")
+        with lock1:
+            print("Thread 2 acquired lock 1")
+
+thread1 = threading.Thread(target=create_deadlock)
+thread2 = threading.Thread(target=create_deadlock)
+
+thread1.start()
+thread2.start()
+
+thread1.join()
+thread2.join()
+
+
+2. 以下のコードでレースコンディション（競合状態）が発生する理由を説明してください。
+import threading
+
+class Counter:
+    def __init__(self):
+        self.count = 0
+
+    def increment(self):
+        self.count += 1
+
+    def get_count(self):
+        return self.count
+
+counter = Counter()
+
+def increment_counter():
+    for _ in range(1000):
+        counter.increment()
+
+thread1 = threading.Thread(target=increment_counter)
+thread2 = threading.Thread(target=increment_counter)
+
+thread1.start()
+thread2.start()
+
+thread1.join()
+thread2.join()
+
+print("Final count:", counter.get_count())
+
+
+3. `with lock:`で始まるコードブロックの開始時に変数`lock`はどうなりますか？ 
+
+4. `with lock:`で始まるコードブロックが終了すると、変数`lock`はどうなりますか？
+
+5. 以下のコードにマルチスレッディングの使用を追加したい理由は何ですか？
+import requests
+
+def fetch_url(url):
+    response = requests.get(url)
+    print(f"Response from {url}: {response.status_code}")
+
+urls = [
+    "https://www.example.com",
+    "https://www.google.com",
+    "https://www.github.com"
+]
+
+for url in urls:
+    fetch_url(url)
