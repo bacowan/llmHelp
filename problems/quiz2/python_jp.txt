@@ -56,9 +56,9 @@ thread2.join()
 print("Final count:", counter.get_count())
 
 
-3. `with lock:`で始まるコードブロックの開始時に変数`lock`はどうなりますか？ 
+3. `with lock:`で始まるコードブロックの開始時に変数`lock`はどのような状態になりますか？
 
-4. `with lock:`で始まるコードブロックが終了すると、変数`lock`はどうなりますか？
+4. `with lock:`で始まるコードブロックが終了すると、変数`lock`はどのような状態になりますか？
 
 5. 以下のコードにマルチスレッディングの使用を追加したい理由は何ですか？
 import requests
