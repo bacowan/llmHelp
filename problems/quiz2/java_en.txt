@@ -75,9 +75,9 @@ public class Counter {
     }
 }
 
-3. What happens to the variable `lock` at the start of a block of code beginning with `synchronized (accountFrom.lock) {`? 
+3. What happens to the variable `lock` at the start of a block of code beginning with `synchronized (lock) {`? 
 
-4. What happens to the variable `lock` when the block of code beginning with `synchronized (accountFrom.lock) {` exits?
+4. What happens to the variable `lock` when the block of code beginning with `synchronized (lock) {` exits?
 
 5. Why might one want to add the use of multithreading in the following code?
 import java.io.IOException;
