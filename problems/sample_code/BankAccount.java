@@ -41,6 +41,7 @@ public class BankAccount {
 
     // exclude_start
     public static void main(String[] args) throws InterruptedException {
+        System.out.println("Test started...");
         BankAccount account1 = new BankAccount(1000);
         BankAccount account2 = new BankAccount(1500);
         Thread thread1 = new Thread(new Runnable() {
@@ -57,11 +58,17 @@ public class BankAccount {
         });
         thread1.start();
         thread2.start();
-        thread1.join();
-        thread2.join();
-        assert account1.balance == 1100 : "the balance of account1 was supposed to be 1100 but was instead " + account1.balance;
-        assert account2.balance == 1400 : "the balance of account2 was supposed to be 1400 but was instead " + account2.balance;
-        System.out.println("success!");
+        thread1.join(1000);
+        thread2.join(1000);
+        if (account1.balance != 1100) {
+            System.out.println("the balance of account1 was supposed to be 1100 but was instead " + account1.balance);
+        }
+        else if (account2.balance != 1400) {
+            System.out.println("the balance of account2 was supposed to be 1400 but was instead " + account2.balance);
+        }
+        else {
+            System.out.println("success!");
+        }
     }
     // exclude_stop
 }

@@ -26,15 +26,16 @@ export default class Framework {
     }
 
     #stripExclude(code: string): string {
-        const lines = code.split("\n");
+        const lines = code.split(/\r?\n/);
         let ret : String[] = [];
         let excluding = false;
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
-            if (line.startsWith("# exclude_start") || line.startsWith("// exclude_start")) {
+            const trimmedLine = line.trim();
+            if (trimmedLine.startsWith("# exclude_start") || trimmedLine.startsWith("// exclude_start")) {
                 excluding = true;
             }
-            else if (line.startsWith("# exclude_stop") || line.startsWith("// exclude_stop")) {
+            else if (trimmedLine.startsWith("# exclude_stop") || trimmedLine.startsWith("// exclude_stop")) {
                 excluding = false;
             }
             else if (!excluding) {
