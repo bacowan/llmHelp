@@ -79,7 +79,7 @@ export default class Framework {
         }
         this.#conversationHistory.push({role: "system", content: system_prompt});
 
-        return await this.#chat(question, true, false);
+        return await this.#chat(question, true, this.#useFramework);
     }
 
     async #sendNewPrompt(prompt: string, code: string) : Promise<string> {
