@@ -1,6 +1,6 @@
 - You will be given 15 minutes to complete the given problem. If you finish early then let me know and then you can move; otherwise I will let you know when the time is up and then you can move on.
-- I have already written a partial solution for each of the problems, but there are issues with them.
-- When solving the problem, I want you to consult with the chat window, which is connected to ChatGPT: it is aware of the code you write as well as the questions you are given. Don't try to complete the question on your own; ask it for help when trying to understand the code and solving the problem.
+- I have already written a partial solution for the problem, but there are issues with it.
+- When solving the problem, I want you to consult with the chat window, which is connected to ChatGPT: it is aware of the code you write as well as the question you are given. Don't try to complete the question on your own; ask it for help when trying to understand the code and solving the problem.
 - Do not open any other files or applications.
 - Note that any code that is written between the "exclude_start" and "exclude_end" comments will not be sent to ChatGPT. Feel free to edit the code that is there: it is there for the sake of testing your code.
 - Once you are finished, you will be given a quiz and a questionnaire
