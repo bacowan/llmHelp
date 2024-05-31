@@ -1,0 +1,178 @@
+Individual responses:
+dictionary_sum:
+on the right track:
+useful
+useful
+useful
+useful
+misleading (the student was on the right track, but the framework wanted to suggest a better way, making the student feel incorrect)
+useful
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
+
+list_reverse:
+on the right track:
+useful
+useful
+useful
+useful
+useful
+useful
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
+
+recursion:
+on the right track:
+useful
+useful
+useful
+useful
+uesful
+useful
+
+a little more lost:
+useful
+Repeated response (asked the student to define recursion twice)
+useful
+useful
+useful
+useful
+
+set_intersection:
+on the right track:
+useful
+useful
+useful
+useful
+useful
+useful
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
+
+square_matrix:
+on the right track:
+useful
+useful
+useful
+useful
+useful
+useful
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
+
+string_palendrome:
+on the right track:
+useful
+useful
+useful
+useful
+Repeated response (student mostly has it figured out, so it seems like it doesn't really know what else to ask)
+useful (recaps and then asks student about implementation)
+
+a little more lost:
+useful
+useful
+useful
+useful
+Full answer: fail
+
+triple cube:
+on the right track:
+useful
+useful
+useful
+useful
+useful
+useful
+
+a little more lost:
+useful
+useful
+useful
+useful
+useful
+useful
+
+Overall Conversations:
+dictionary_sum:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+list_reverse:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+recursion:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+set_intersection:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+square_matrix:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+string_palendrome:
+on the right track:
+pass
+
+a little more lost:
+fail
+
+triple cube:
+on the right track:
+pass
+
+a little more lost:
+pass
+
+
+
+Note: Should also do the same test as "validation", just to see how it behaves with the new framework and without the validation step.
+
+Things I noticed:
+GPT 4 seems to be much more verbose. I'd say it's better, but it's likely that the framework should be configurable for each LLM that it's built for.
+Sometimes it lists all of the techniques it's using. This isn't a bad thing nessisarily, but makes it a little verbose.
+In turn, responses felt slower
+I feel like the responses are much more detailed, so whether responses are "useful" or not is really determined by the individual students
