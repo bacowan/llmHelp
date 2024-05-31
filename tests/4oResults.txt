@@ -166,13 +166,3 @@ pass
 
 a little more lost:
 pass
-
-
-
-Note: Should also do the same test as "validation", just to see how it behaves with the new framework and without the validation step.
-
-Things I noticed:
-GPT 4 seems to be much more verbose. I'd say it's better, but it's likely that the framework should be configurable for each LLM that it's built for.
-Sometimes it lists all of the techniques it's using. This isn't a bad thing nessisarily, but makes it a little verbose.
-In turn, responses felt slower
-I feel like the responses are much more detailed, so whether responses are "useful" or not is really determined by the individual students

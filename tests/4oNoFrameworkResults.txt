@@ -1,0 +1,99 @@
+Individual responses:
+dictionary_sum:
+on the right track:
+code solution
+
+a little more lost:
+code solution
+
+list_reverse:
+on the right track:
+code solution
+
+a little more lost:
+code solution
+
+recursion:
+on the right track:
+code solution
+
+a little more lost:
+code solution
+
+set_intersection:
+on the right track:
+code solution
+
+a little more lost:
+code solution
+
+square_matrix:
+on the right track:
+code solution
+
+a little more lost:
+code solution
+
+string_palendrome:
+on the right track:
+code solution
+
+a little more lost:
+code solution
+
+triple cube:
+on the right track:
+code solution
+
+a little more lost:
+code solution
+
+Overall Conversations:
+dictionary_sum:
+on the right track:
+fail
+
+a little more lost:
+fail
+
+list_reverse:
+on the right track:
+fail
+
+a little more lost:
+fail
+
+recursion:
+on the right track:
+fail
+
+a little more lost:
+fail
+
+set_intersection:
+on the right track:
+fail
+
+a little more lost:
+fail
+
+square_matrix:
+on the right track:
+fail
+
+a little more lost:
+fail
+
+string_palendrome:
+on the right track:
+fail
+
+a little more lost:
+fail
+
+triple cube:
+on the right track:
+fail
+
+a little more lost:
+fail
