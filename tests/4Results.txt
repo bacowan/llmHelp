@@ -1,6 +1,6 @@
 Individual responses:
 dictionary_sum:
-on the right track:
+on the right track:6
 useful
 useful
 useful
@@ -8,7 +8,7 @@ useful
 useful
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
@@ -18,7 +18,7 @@ useful
 
 
 list_reverse:
-on the right track:
+on the right track:6
 useful
 useful
 useful
@@ -27,7 +27,7 @@ useful
 useful
 
 
-a little more lost:
+a little more lost:5
 useful
 useful
 useful
@@ -36,7 +36,7 @@ useful
 misleading (asked if my change on its own would work (it would), but was told that more was needed)
 
 recursion:
-on the right track:
+on the right track:6
 useful
 useful
 useful
@@ -45,7 +45,7 @@ useful
 useful
 
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
@@ -55,7 +55,7 @@ useful
 
 
 set_intersection:
-on the right track:
+on the right track:5
 useful
 useful
 useful
@@ -63,7 +63,7 @@ useful
 misleading (it said that there's no way to break out of multiple loops, but you can use return to do so)
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
@@ -73,7 +73,7 @@ useful
 
 
 square_matrix:
-on the right track:
+on the right track:6
 useful
 useful
 useful
@@ -81,7 +81,7 @@ useful
 useful
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
@@ -90,7 +90,7 @@ useful
 useful
 
 string_palendrome:
-on the right track:
+on the right track:6
 useful
 useful
 useful
@@ -98,7 +98,7 @@ useful
 useful
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
@@ -107,7 +107,7 @@ useful
 useful
 
 triple cube:
-on the right track:
+on the right track:6
 useful
 useful
 useful
@@ -115,7 +115,7 @@ useful
 useful
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful

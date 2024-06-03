@@ -1,6 +1,6 @@
 Individual responses:
 dictionary_sum:
-on the right track:
+on the right track:5
 useful
 useful
 useful
@@ -8,7 +8,7 @@ useful
 misleading (the student was on the right track, but the framework wanted to suggest a better way, making the student feel incorrect)
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
@@ -17,7 +17,7 @@ useful
 useful
 
 list_reverse:
-on the right track:
+on the right track:6
 useful
 useful
 useful
@@ -25,7 +25,7 @@ useful
 useful
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
@@ -34,7 +34,7 @@ useful
 useful
 
 recursion:
-on the right track:
+on the right track:6
 useful
 useful
 useful
@@ -42,7 +42,7 @@ useful
 uesful
 useful
 
-a little more lost:
+a little more lost:5
 useful
 Repeated response (asked the student to define recursion twice)
 useful
@@ -51,7 +51,7 @@ useful
 useful
 
 set_intersection:
-on the right track:
+on the right track:6
 useful
 useful
 useful
@@ -59,7 +59,7 @@ useful
 useful
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
@@ -68,7 +68,7 @@ useful
 useful
 
 square_matrix:
-on the right track:
+on the right track:6
 useful
 useful
 useful
@@ -76,7 +76,7 @@ useful
 useful
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
@@ -85,7 +85,7 @@ useful
 useful
 
 string_palendrome:
-on the right track:
+on the right track:5
 useful
 useful
 useful
@@ -93,7 +93,7 @@ useful
 Repeated response (student mostly has it figured out, so it seems like it doesn't really know what else to ask)
 useful (recaps and then asks student about implementation)
 
-a little more lost:
+a little more lost:0
 useful
 useful
 useful
@@ -101,7 +101,7 @@ useful
 Full answer: fail
 
 triple cube:
-on the right track:
+on the right track:6
 useful
 useful
 useful
@@ -109,7 +109,7 @@ useful
 useful
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful

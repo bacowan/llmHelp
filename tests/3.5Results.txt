@@ -1,6 +1,6 @@
 Individual responses:
 dictionary_sum:
-on the right track:
+on the right track:6
 useful
 useful
 useful
@@ -8,7 +8,7 @@ useful
 useful
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
@@ -18,7 +18,7 @@ useful
 
 
 list_reverse:
-on the right track:
+on the right track:5
 useful
 useful
 useful
@@ -26,7 +26,7 @@ Repeated Response
 useful
 useful
 
-a little more lost:
+a little more lost:4
 useful
 Misleading
 Misleading
@@ -35,7 +35,7 @@ useful
 useful
 
 recursion:
-on the right track:
+on the right track:5
 useful
 useful
 Misleading
@@ -43,7 +43,7 @@ useful
 useful
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
@@ -52,7 +52,7 @@ useful
 useful
 
 set_intersection:
-on the right track:
+on the right track:0
 useful
 useful
 Repeated Response
@@ -61,7 +61,7 @@ useful
 Misleading
 (failed)
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
@@ -70,7 +70,7 @@ useful
 useful
 
 square_matrix:
-on the right track:
+on the right track:0
 useful
 useful
 useful
@@ -78,7 +78,7 @@ useful
 Misleading
 Misleading
 
-a little more lost:
+a little more lost:0
 useful
 useful
 useful
@@ -87,7 +87,7 @@ useful
 Misleading
 
 string_palendrome:
-on the right track:
+on the right track:5
 useful
 Repeated response
 useful
@@ -95,7 +95,7 @@ useful
 useful
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
@@ -104,7 +104,7 @@ useful
 useful
 
 tripple cube:
-on the right track:
+on the right track:6
 useful
 useful
 useful
@@ -112,7 +112,7 @@ useful
 useful
 useful
 
-a little more lost:
+a little more lost:6
 useful
 useful
 useful
